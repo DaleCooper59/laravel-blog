@@ -2,16 +2,11 @@
 @extends('template')
 
 @section('content')
-<style>
-  .uper {
-    margin-top: 40px;
-  }
-</style>
 
 <div class="card uper">
   <div class="card-header">
     @section('h1')
-        Ajouter un article
+        <h1 class="text-indigo-300">Ajouter un article</h1>
     @endsection
   </div>
 

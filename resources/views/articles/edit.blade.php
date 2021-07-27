@@ -1,10 +1,10 @@
-@extends('../template')
+@extends('template')
 
-@section('../content')
+@section('content')
 
 @if ($errors->any())
 <div class="alert alert-danger">
-    <strong>Whoops!</strong> There were some problems with your input.<br><br>
+    <label>Whoops!</label> There were some problems with your input.<br><br>
     <ul>
         @foreach ($errors->all() as $error)
             <li>{{ $error }}</li>
@@ -13,45 +13,49 @@
 </div>
 @endif
 
-    <form action="{{ route('posts.update',$article->id) }}" method="POST">
+@foreach ($article as $art)
+    
+
+    <form action="{{ route('articles.update',['id' => $art->id]) }}" method="POST">
         @csrf
-      <?= /* @method('PUT')*/?>
+      
    
-         <div class="row">
-            <div class="col-xs-12 col-sm-12 col-md-12">
+         <div class="">
+            <div class="">
                 <div class="form-group">
-                    <strong>Title:</strong>
-                    <input type="text" name="title" value="{{ $article->title }}" class="form-control" placeholder="Title">
+                    <label>Titre de l'article</label>
+                    <input type="text" name="title" value="{{ $art->title }}" class="form-control" placeholder="Titre">
                 </div>
             </div>
-            <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="bg-indigo-300 hover:bg-indigo-500 font-bold py-2 px-4 rounded">
                 <div class="form-group">
-                    <strong>contenu</strong>
-                    <textarea class="form-control" style="height:150px" name="content" placeholder="contenu">{{ $article->content }}</textarea>
+                    <label>Contenu</label>
+                    <textarea class="form-control"  name="content" placeholder="contenu">{{ $art->content }}</textarea>
                 </div>
             </div>
-            <!--<div class="col-xs-12 col-sm-12 col-md-12">
+            <!--<div class="bg-indigo-300 hover:bg-indigo-500 font-bold py-2 px-4 rounded">
                 <div class="form-group">
-                    <strong>Catégorie</strong>
-                    <input type="text" name="category" value="{{ $category->name }}" class="form-control" placeholder="Catégorie">
+                    <label>Catégorie</label>
+                    <input type="text" name="category" value="" class="form-control" placeholder="Catégorie">
                 </div>
             </div>-->
-            <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="bg-indigo-300 hover:bg-indigo-500 font-bold py-2 px-4 rounded">
                 <div class="form-group">
-                    <strong>image</strong>
-                    <textarea class="form-control" style="height:150px" name="picture" placeholder="image">{{ $article->picture }}</textarea>
+                    <label>Image</label>
+                    <textarea class="form-control"  name="picture" placeholder="image">{{ $art->picture }}</textarea>
                 </div>
             </div>
-            <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="bg-indigo-300 hover:bg-indigo-500 font-bold py-2 px-4 rounded">
                 <div class="form-group">
-                    <strong>slug</strong>
-                    <textarea class="form-control" style="height:150px" name="slug" placeholder="slug">{{ $article->slug }}</textarea>
+                    <label>slug</label>
+                    <textarea class="form-control"  name="slug" placeholder="slug">{{ $art->slug }}</textarea>
                 </div>
             </div>
-            <div class="col-xs-12 col-sm-12 col-md-12 text-center">
+            <div class="bg-indigo-300 hover:bg-indigo-500 font-bold py-2 px-4 rounded text-center">
               <button type="submit" class="btn btn-primary">envoyer</button>
             </div>
         </div>
    
     </form>
 @endsection
+@endforeach

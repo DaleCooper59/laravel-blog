@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Article;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class CrudController extends Controller
 {
@@ -16,7 +17,7 @@ class CrudController extends Controller
     {
         return view('articles', [
             'articles' => Article::all()
-            
+
         ]);
     }
 
@@ -38,15 +39,26 @@ class CrudController extends Controller
      */
     public function store(Request $request)
     {
+
         $request->validate([
             'title' => 'required',
             'content' => 'required',
             'picture' => 'required',
             'slug' => 'required'
         ]);
-        //dd($request->all());
-        Article::create()->route('articles')->with('success', 'Article bien publié');
+
+        Article::create([
+            'title' => $request->title,
+            'content' => $request->content,
+            'picture' => $request->picture,
+            'slug' => $request->slug
+        ]);
+
+        Session::flash('success', 'Votra article a bien été publié');
+
+        return redirect()->route('articles.index');
     }
+
 
     /**
      * Display the specified resource.
@@ -54,10 +66,16 @@ class CrudController extends Controller
      * @param  \App\article  $article
      * @return \Illuminate\Http\Response
      */
-    public function show(article $article)
+    public function show(article $id)
     {
-        
+        $article = Article::find($id);
+
+        return view('articles.show', [
+            'article' => $article
+
+        ]);
     }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -65,9 +83,12 @@ class CrudController extends Controller
      * @param  \App\article  $article
      * @return \Illuminate\Http\Response
      */
-    public function edit(article $article)
+    public function edit(article $id)
     {
-        return view('articles');
+        $article = Article::find($id);
+        return view('articles.edit', [
+            'article' => $article
+        ]);
     }
 
     /**
@@ -79,7 +100,26 @@ class CrudController extends Controller
      */
     public function update(Request $request, article $article)
     {
-        //
+       
+        $request->validate([
+            'title' => 'required',
+            'content' => 'required',
+            'picture' => 'required',
+            'slug' => 'required'
+        ]);
+
+        $article->update([
+            'title' => $request->title,
+            'content' => $request->content,
+            'picture' => $request->picture,
+            'slug' => $request->slug
+        ]);
+
+        $article->save();
+
+        Session::flash('success', 'L\' article a bien été modifié');
+
+        return redirect()->route('articles.index');
     }
 
     /**

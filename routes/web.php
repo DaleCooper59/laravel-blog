@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use app\Http\Controllers\CrudController;
+use App\Http\Controllers\CrudController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -18,9 +18,9 @@ Route::get('/', function () {
 });
 
 //listing des articles
-Route::get('articles', 'CrudController@index');
-Route::get('articles/create', 'CrudController@create')->name('articles.create');
-Route::post('articles/store', 'CrudController@store')->name('articles.store');
-Route::get('articles/show', 'CrudController@show')->name('articles.show');
-Route::get('articles/edit', 'CrudController@edit')->name('articles.edit');
-Route::post('articles/update', 'CrudController@update')->name('articles.update');
+Route::get('articles', [CrudController::class,'index'])->name('articles.index');
+Route::get('articles/create', [CrudController::class,'create'])->name('articles.create');
+Route::post('articles/store', [CrudController::class,'store'])->name('articles.store');
+Route::get('articles/show/{id}', [CrudController::class,'show'])->name('articles.show');
+Route::get('articles/edit/{id}', [CrudController::class,'edit'])->name('articles.edit');
+Route::post('articles/update', [CrudController::class,'update'])->name('articles.update');

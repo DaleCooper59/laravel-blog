@@ -16,6 +16,9 @@
         <div class="md:flex container border p-4">
             je suis une div
         </div>
+        <div class="md:flex container border p-8">
+            je suis une nouvelle div bien meilleure
+        </div>
         <div class="flex-center position-ref full-height">
             @if (Route::has('login'))
                 <div class="top-right links">
