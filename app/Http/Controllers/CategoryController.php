@@ -109,7 +109,7 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        Article::where('category_id', $category->id)->first()->update(['category_id' => null]);
+        Article::where('category_id', $category->id)->update(['category_id' => null]);
         
         $category->delete();
 

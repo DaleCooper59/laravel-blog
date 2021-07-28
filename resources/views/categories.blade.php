@@ -32,7 +32,7 @@
                         <td>
                             <form action="{{ route('categories.destroy', $category->id) }}" method="post">
                                 @csrf
-                                {{ method_field('PUT') }}
+                                {{ method_field('DELETE') }}
                                 <button 
                             class="bg-red-600 text-white active:bg-red-900 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                             type="submit">
