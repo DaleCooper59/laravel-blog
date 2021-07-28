@@ -29,11 +29,16 @@
                             type="button">Modifier
                         </a>
                         </td>
-                        <td><a href="{{ route('categories.destroy', $category->id) }}"
+                        <td>
+                            <form action="{{ route('categories.destroy', $category->id) }}" method="post">
+                                @csrf
+                                {{ method_field('PUT') }}
+                                <button 
                             class="bg-red-600 text-white active:bg-red-900 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                            type="button">
+                            type="submit">
                             <i class="fas fa-heart"></i> Effacer la catégorie
-                        </a></td>
+                            </button>
+                    </form></td>
                     </tr>
 
                 @endforeach

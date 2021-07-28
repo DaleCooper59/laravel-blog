@@ -84,7 +84,7 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-       
+      
         $request->validate([
             'name' => 'required'
         ]);
@@ -109,7 +109,8 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-       // Article::fin
+        Article::where('category_id', $category->id)->first()->update(['category_id' => null]);
+        
         $category->delete();
 
         Session::flash('success', 'La categorie a bien été supprimée');
