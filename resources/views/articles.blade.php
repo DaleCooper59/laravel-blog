@@ -1,33 +1,35 @@
 @extends('template')
 
 @section('h1')
-    <h1 class="text-indigo-300 text-center text-5xl">Liste des articles</h1>
+    <div class="container p-4 flex flex-row justi">
+        <h1 class="text-indigo-300 text-center text-5xl">Liste des articles</h1>
+        <button
+            class="bg-green-200 hover:bg-green-300 text-white font-bold py-2 px-4 border-b-4 border-green-700 hover:border-green-500 rounded">
+            <a href="{{ route('articles.create') }}"> Ecrire un article</a>
+        </button>
+    </div>
 @endsection
 
 @section('content')
-    <div class="container mx-auto">
-        <button
-            class="bg-green-200 hover:bg-green-300 text-white font-bold py-2 px-4 border-b-4 border-green-700 hover:border-green-500 rounded">
-            <a href="{{ route('articles.create') }}"> Create New Post</a>
-        </button>
+    <div class="container mx-auto text-center">
+
 
         <br><br>
         <div class="flash-message">
             @foreach (['danger', 'warning', 'success', 'info'] as $msg)
-                @if (Session::has( $msg))
+                @if (Session::has($msg))
                     <button
                         class="{{ $msg }} text-green-300 bg-tranparent border border-solid border-green-500 hover:bg-gray-300 hover:text-green-600 active:bg-gray-600 font-bold uppercase text-xs px-4 py-2 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                         type="button">
                         {{ Session::get($msg) }}
                     </button>
-                    
+
                 @endif
             @endforeach
         </div>
         <!-- This is an example component -->
         <div class="container mx-auto my-5">
             @if ($articles->count() > 0)
-
 
                 @foreach ($articles as $article)
                     <ul>
@@ -52,12 +54,15 @@
 
                             <div class="z-10 order-2 md:order-1 w-full h-full md:w-3/5 flex items-center -mt-6 md:mt-0">
                                 <div
-                                    class="p-8 md:pr-18 md:pl-14 md:py-12 mx-2 md:mx-0 h-full bg-white rounded-lg md:rounded-none md:rounded-l-lg shadow-xl md:shadow-none">
+                                    class="overflow-hidden p-8 md:pr-18 md:pl-14 md:py-12 mx-2 md:mx-0 h-full bg-white rounded-lg md:rounded-none md:rounded-l-lg shadow-xl md:shadow-none">
                                     <h4 class="hidden md:block text-xl text-gray-400"> {{ $article->id }}</h4>
-                                    <a href="{{ route('articles.show', ['id' => $article->id]) }}">
-                                        <h3 class="hidden md:block font-bold text-2xl text-gray-700">{{ $article->title }}
-                                        </h3>
+                                    <a href="{{ route('articles.show', $article->id) }}">
+                                        <h3 class="hidden md:block font-bold text-2xl text-gray-700">{{ $article->title }}</h3>
                                     </a>
+                                    @if($article->category)
+                                    <a href="{{route('categories.index')}}"><h5>{{ $article->category->name}}</h5></a> 
+                                    @endif
+
 
                                     <p>{{ $article->content }}</p>
 

@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Article;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
-class CrudController extends Controller
+class ArticleController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
@@ -16,7 +18,7 @@ class CrudController extends Controller
     public function index()
     {
         return view('articles', [
-            'articles' => Article::all()
+            'articles' => Article::with('category')->get()
 
         ]);
     }
@@ -26,9 +28,13 @@ class CrudController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Category $categories)
     {
-        return view('articles/create');
+        $categories = Category::lists('name');
+
+        return view('articles/create', [
+            'category' => $categories
+        ]);
     }
 
     /**
@@ -39,21 +45,25 @@ class CrudController extends Controller
      */
     public function store(Request $request)
     {
-
+        
         $request->validate([
             'title' => 'required',
+            'category' => 'required',
             'content' => 'required',
             'picture' => 'required',
             'slug' => 'required'
+            
         ]);
-
+        
         Article::create([
             'title' => $request->title,
+            'category_id' => $request->category,
             'content' => $request->content,
             'picture' => $request->picture,
             'slug' => $request->slug
         ]);
 
+        
         Session::flash('success', 'Votra article a bien été publié');
 
         return redirect()->route('articles.index');
@@ -66,9 +76,8 @@ class CrudController extends Controller
      * @param  \App\article  $article
      * @return \Illuminate\Http\Response
      */
-    public function show(article $id)
+    public function show(Article $article)
     {
-        $article = Article::find($id);
 
         return view('articles.show', [
             'article' => $article
@@ -83,11 +92,13 @@ class CrudController extends Controller
      * @param  \App\article  $article
      * @return \Illuminate\Http\Response
      */
-    public function edit(article $id)
+    public function edit(Article $article)
     {
-        $article = Article::find($id);
+        $categories = Category::lists('name', $article);
+      
         return view('articles.edit', [
-            'article' => $article
+            'article' => $article, 
+            'category' => $categories
         ]);
     }
 
@@ -98,18 +109,21 @@ class CrudController extends Controller
      * @param  \App\article  $article
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, article $article)
+    public function update(Request $request, Article $article)
     {
        
         $request->validate([
             'title' => 'required',
+            'category' => 'required',
             'content' => 'required',
             'picture' => 'required',
             'slug' => 'required'
         ]);
 
+
         $article->update([
             'title' => $request->title,
+            'category_id' => $request->category, 
             'content' => $request->content,
             'picture' => $request->picture,
             'slug' => $request->slug
@@ -128,8 +142,11 @@ class CrudController extends Controller
      * @param  \App\article  $article
      * @return \Illuminate\Http\Response
      */
-    public function destroy(article $article)
+    public function destroy(Article $article)
     {
-        //
+        $article->delete();
+
+        Session::flash('success', 'L\' article a bien été supprimé');
+        return redirect()->route('articles.index');
     }
 }
