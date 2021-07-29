@@ -32,6 +32,7 @@
             @if ($articles->count() > 0)
 
                 @foreach ($articles as $article)
+                
                     <ul>
                         <div class="relative rounded-lg flex flex-col md:flex-row items-center md:shadow-xl md:h-72 mx-2">
 

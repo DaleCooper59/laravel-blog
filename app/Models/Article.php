@@ -11,6 +11,8 @@ class Article extends Model
     protected $fillable = ['title', 'content', 'picture', 'slug', 'category_id'];
 
     public function category(){
-        return $this->belongsTo('App\Models\Category');
+        return $this->belongsToMany(Category::class)->withDefault([
+            'name' => 'Guest categorie',
+        ]);
     }
 }
