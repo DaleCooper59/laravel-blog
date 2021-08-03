@@ -16,12 +16,14 @@ class ArticleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Article $article)
     {
 
+        //$article = Article::latest()->where('user_id',2)->get();
+        $article = Article::articles();
         return view('articles', [
-            'articles' => Article::with('category')->get()
-
+            'articles' => $article/*,
+            'cat' => Article::has('categories')->with('categories')->get()*/
         ]);
     }
 
@@ -53,16 +55,18 @@ class ArticleController extends Controller
             'category' => 'required',
             'content' => 'required',
             'picture' => 'required',
-            'slug' => 'required'
-
+            'slug' => 'required',
+            'user_id' => 'required'
         ]);
 
+        
         Article::create([
             'title' => $request->title,
-            'category_id' => $request->category,
+            'category' => $request->category,
             'content' => $request->content,
             'picture' => $request->picture,
-            'slug' => $request->slug
+            'slug' => $request->slug,
+            'user_id' => $request->user_id // => ce sera l'id de l'user à l'avenir
         ]);
 
 

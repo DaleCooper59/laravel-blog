@@ -22,8 +22,15 @@
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
                     <strong>Categorie:</strong>
-                @if ($article->category)
-                     {{ $article->category->name }}
+                    @if ($article->categories)
+                    @foreach ($article->categories as $item)
+                        @if ($item->name)
+                            <a href="{{ route('categories.index') }}">
+                                <h5>{{ $item->name }}</h5>
+                            </a>
+
+                        @endif
+                    @endforeach
                 @endif
                 </div>
             </div>

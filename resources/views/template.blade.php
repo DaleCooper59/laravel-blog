@@ -7,16 +7,19 @@
   <title>title</title>
   
   <link href="{{asset('css/app.css')}}" rel="stylesheet">
-  
+  <link rel="stylesheet" href="{{asset('css/custom.css')}}">
   
 </head>
 
 <body>
-  <div class="container">
+  
+  <div class="container mx-auto w-screen min-h-screen">
+    
   @yield('h1')
   
     @yield('content')
   </div>
   <script src="{{ asset('js/app.js') }}" type="text/js"></script>
+  <script src="{{ asset('js/custom.js') }}" type="text/js"></script>
 </body>
 </html>

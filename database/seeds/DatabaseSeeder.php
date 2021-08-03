@@ -1,7 +1,5 @@
 <?php
 
-use App\Models\Article;
-use App\Models\Category;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -13,10 +11,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $article = Article::factory(20)->create();
-
-        Category::create([
-            'name' => 'Personnal'
-        ]);
+        $this->call(CategoryTableSeeder::class);
+        $this->call(UserTableSeeder::class);
+        $this->call(ArticleTableSeeder::class);
+    
     }
 }

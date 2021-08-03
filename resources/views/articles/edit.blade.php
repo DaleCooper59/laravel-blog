@@ -17,7 +17,7 @@
 
     <form action="{{ route('articles.update', $article->id) }}" method="POST">
         @csrf
-      
+        
    
          <div class="">
             <div class="">
@@ -41,7 +41,6 @@
                         @endforeach
                       
                     </Select>
-                    
                 </div>
             </div>
             <div class="bg-indigo-300 hover:bg-indigo-500 font-bold py-2 px-4 rounded">

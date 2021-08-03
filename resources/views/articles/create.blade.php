@@ -90,6 +90,10 @@
                         <input
                             class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4"
                             id="grid-city" name="slug" type="text" placeholder="Albuquerque">
+                        
+                        <input
+                            class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4"
+                            id="grid-city" name="user_id" type="int" value="3">
                     </div>
 
                 </div>

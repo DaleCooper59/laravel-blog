@@ -1,18 +1,32 @@
 @extends('template')
 
+@include('component/sidebar')
 @section('h1')
-    <div class="container p-4 flex flex-row justi">
-        <h1 class="text-indigo-300 text-center text-5xl">Liste des articles</h1>
-        <button
-            class="bg-green-200 hover:bg-green-300 text-white font-bold py-2 px-4 border-b-4 border-green-700 hover:border-green-500 rounded">
-            <a href="{{ route('articles.create') }}"> Ecrire un article</a>
-        </button>
+<!--<div class="button flex justify-center mt-32 md:hidden">
+    <button
+        class=" flex justify-center bg-green-200 hover:bg-green-300 text-white font-bold py-2 px-4 border-b-4 border-green-700 hover:border-green-500 rounded">
+        <a href="{{ route('articles.create') }}"> Ecrire un article</a>
+    </button>
+</div>
+-->
+     <button
+        class="md:absolute z-50 top-0 right-0 flex bg-green-200 hover:bg-green-300 text-white font-bold py-2 px-4 border-b-4 border-green-700 hover:border-green-500 rounded">
+        <a href="{{ route('articles.create') }}"> Ecrire un article</a>
+    </button>
+
+   
+
+    <div class="container flex-1 p-4 flex justify-center static">
+        <h1 class="text-indigo-300 text-center text-5xl py-24">Liste des articles</h1>
+
     </div>
+
+
 @endsection
 
 @section('content')
-    <div class="container mx-auto text-center">
 
+    <div class="container flex-1 mx-auto text-center">
 
         <br><br>
         <div class="flash-message">
@@ -28,56 +42,41 @@
             @endforeach
         </div>
         <!-- This is an example component -->
-        <div class="container mx-auto my-5">
-            @if ($articles->count() > 0)
+        <div class="container w-full mx-auto my-5">
+            <ul>
+                @if ($articles->count() > 0)
 
-                @foreach ($articles as $article)
-                
-                    <ul>
-                        <div class="relative rounded-lg flex flex-col md:flex-row items-center md:shadow-xl md:h-72 mx-2">
+                    @foreach ($articles as $article)
+                        <div class="my-4">
+                            <div class="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl">
+                                <div class="md:flex">
+                                    <div class="md:flex-shrink-0">
+                                        <img class="h-48 w-full object-cover md:w-48"
+                                            src="https://source.unsplash.com/random" alt="A cat">
+                                    </div>
+                                    <div class="p-8">
+                                        <div class="uppercase tracking-wide text-sm text-indigo-500 font-semibold">
+                                            {{ $article->id }}</div>
+                                        <a href="{{ route('articles.show', $article->id) }}"
+                                            class="block mt-1 text-lg leading-tight font-medium text-black hover:underline">{{ $article->title }}</a>
+                                        @if ($article->categories)
+                                            @foreach ($article->categories as $item)
+                                                @if ($item->name)
+                                                    <a href="{{ route('categories.index') }}">
+                                                        <h5>{{ $item->name }}</h5>
+                                                    </a>
 
-                            <div
-                                class="z-0 order-1 md:order-2 relative w-full md:w-2/5 h-80 md:h-full overflow-hidden rounded-lg md:rounded-none md:rounded-r-lg">
-                                <div class="absolute inset-0 w-full h-full object-fill object-center bg-blue-400 bg-opacity-30 bg-cover bg-bottom"
-                                    style="background-image: url( https://images.unsplash.com/photo-1525302220185-c387a117886e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80 ); background-blend-mode: multiply;">
-                                </div>
-                                <div
-                                    class="md:hidden absolute inset-0 h-full p-6 pb-6 flex flex-col-reverse justify-start items-start bg-gradient-to-b from-transparent via-transparent to-gray-900">
-                                    <h3 class="w-full font-bold text-2xl text-white leading-tight mb-2"></h3>
-                                    <h4 class="w-full text-xl text-gray-100 leading-tight"></h4>
-                                    <p class="text-gray-600 text-justify"></p>
-                                </div>
-                                <svg class="hidden md:block absolute inset-y-0 h-full w-24 fill-current text-white -ml-12"
-                                    viewBox="0 0 100 100" preserveAspectRatio="none">
-                                    <polygon points="50,0 100,0 50,100 0,100" />
-                                </svg>
-                            </div>
-
-                            <div class="z-10 order-2 md:order-1 w-full h-full md:w-3/5 flex items-center -mt-6 md:mt-0">
-                                <div
-                                    class="overflow-hidden p-8 md:pr-18 md:pl-14 md:py-12 mx-2 md:mx-0 h-full bg-white rounded-lg md:rounded-none md:rounded-l-lg shadow-xl md:shadow-none">
-                                    <h4 class="hidden md:block text-xl text-gray-400"> {{ $article->id }}</h4>
-                                    <a href="{{ route('articles.show', $article->id) }}">
-                                        <h3 class="hidden md:block font-bold text-2xl text-gray-700">{{ $article->title }}</h3>
-                                    </a>
-                                    @if($article->category)
-                                    <a href="{{route('categories.index')}}"><h5>{{ $article->category->name}}</h5></a> 
-                                    @endif
-
-
-                                    <p>{{ $article->content }}</p>
-
-                                    <p>{{ $article->authorID }}</p>
-
-
+                                                @endif
+                                            @endforeach
+                                        @endif
+                                        <p class="mt-2 text-gray-500 overflow-y-hidden">{{ $article->content }}</p>
+                                        <p>{{ $article->authorID }}</p>
+                                    </div>
                                 </div>
                             </div>
-
                         </div>
+                    @endforeach
+                @endif
+            </ul>
         </div>
-
-        @endforeach
-        @endif
-        </ul>
-    </div>
-@endsection
+    @endsection
