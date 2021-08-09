@@ -47,18 +47,6 @@ class CreateTables extends Migration
             $table->engine = 'InnoDB';
         });
 
-        Schema::create('comments', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('content')->unique();
-            $table->boolean('approuved');
-            $table->bigInteger('article_id')->unsigned()->index()->nullable()->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('article_id')->references('id')->on('articles');
-            $table->bigInteger('user_id')->unsigned()->index()->nullable()->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->charset = 'utf8mb4';
-            $table->collation = 'utf8mb4_unicode_ci';
-            $table->engine = 'InnoDB';
-        });
 
         Schema::create('categories', function (Blueprint $table) {
             $table->bigIncrements('id');
