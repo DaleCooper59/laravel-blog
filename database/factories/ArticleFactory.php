@@ -15,7 +15,7 @@ $factory->define(Article::class, function (Faker $faker) {
         'content' =>$faker->text(200),
         'picture' =>$faker->text(200),
         'slug' =>$faker->realText(10,2),
-        'user_id' =>random_int(1,count($user)),
+        'user_id' =>random_int(1,count($user))/*User::factory()*/,
         'created_at' =>$faker->dateTime->format('Y-m-d H:i:s'),
         'updated_at' =>$faker->dateTime->format('Y-m-d H:i:s'),
     ];

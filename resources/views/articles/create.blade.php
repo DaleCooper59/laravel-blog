@@ -31,9 +31,13 @@
                         </label>
                         <input
                             class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-red rounded py-3 px-4 mb-3"
-                            id="title" type="text" name="title" placeholder="Jane">
+                            id="title" type="text" name="title" placeholder="Jane" value="{{ old('title') }}">
 
+                            @error('title')
+                            <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
+                        @enderror
                     </div>
+
                     <div class="md:w-1/2 px-3">
                         <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
                             for="categories">
@@ -42,7 +46,7 @@
                         <div class="relative">
                             <select
                                 class="block appearance-none w-full bg-grey-lighter border border-grey-lighter text-grey-darker py-3 px-4 pr-8 rounded"
-                                id="category" name="category">
+                                id="category" name="category" value="{{ old('category') }}">
 
                                 @foreach ($category as $c)
 
@@ -58,17 +62,23 @@
                                 </svg>
                             </div>
                         </div>
+                        @error('category')
+                            <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
+                        @enderror
                     </div>
 
                 </div>
                 <div class="md:w-1/2 px-3">
                   <label for="content"> Contenu</label>
                     <textarea class="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none" rows="4"
-                        id="content" name="content">
+                        id="content" name="content" value="{{old('content')}}">
                            
                         </textarea>
-
+                        @error('content')
+                            <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
+                        @enderror
                 </div>
+
                 <div class="-mx-3 md:flex mb-6">
                     <div class="md:w-full px-3">
                         <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
@@ -93,7 +103,7 @@
                         
                         <input
                             class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4"
-                            id="grid-city" name="user_id" type="int" value="3">
+                            id="grid-city" name="user_id" type="int" value="">
                     </div>
 
                 </div>

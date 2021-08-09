@@ -1,26 +1,26 @@
 @extends('template')
 
-@include('component/sidebar')
-@section('h1')
-<!--<div class="button flex justify-center mt-32 md:hidden">
-    <button
-        class=" flex justify-center bg-green-200 hover:bg-green-300 text-white font-bold py-2 px-4 border-b-4 border-green-700 hover:border-green-500 rounded">
-        <a href="{{ route('articles.create') }}"> Ecrire un article</a>
-    </button>
+<div x-data="{open:true}" class="text-center ">
+
+    @include('components/sidebar')
+
+    @section('h1')
+
+
+
+
+        <div class="container flex-1 p-4 flex flex-col justify-center items-center h-4/5 static">
+            <h1 class=" text-indigo-300 text-center text-5xl mt-32 lg:m-4 pt-16">Liste des articles</h1>
+
+            @include('components/button-create_article')
+
+
+            <button
+                class="lg:block hidden bg-green-400 hover:bg-green-500 text-white font-bold m-3 py-2 px-4 border-b-4 border-green-800 hover:border-green-700 rounded"
+                @click="open = !open">Menu</button>
+
+        </div>
 </div>
--->
-     <button
-        class="md:absolute z-50 top-0 right-0 flex bg-green-200 hover:bg-green-300 text-white font-bold py-2 px-4 border-b-4 border-green-700 hover:border-green-500 rounded">
-        <a href="{{ route('articles.create') }}"> Ecrire un article</a>
-    </button>
-
-   
-
-    <div class="container flex-1 p-4 flex justify-center static">
-        <h1 class="text-indigo-300 text-center text-5xl py-24">Liste des articles</h1>
-
-    </div>
-
 
 @endsection
 
@@ -28,20 +28,8 @@
 
     <div class="container flex-1 mx-auto text-center">
 
-        <br><br>
-        <div class="flash-message">
-            @foreach (['danger', 'warning', 'success', 'info'] as $msg)
-                @if (Session::has($msg))
-                    <button
-                        class="{{ $msg }} text-green-300 bg-tranparent border border-solid border-green-500 hover:bg-gray-300 hover:text-green-600 active:bg-gray-600 font-bold uppercase text-xs px-4 py-2 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                        type="button">
-                        {{ Session::get($msg) }}
-                    </button>
-
-                @endif
-            @endforeach
-        </div>
-        <!-- This is an example component -->
+        @include('components/flashMessage')
+        
         <div class="container w-full mx-auto my-5">
             <ul>
                 @if ($articles->count() > 0)

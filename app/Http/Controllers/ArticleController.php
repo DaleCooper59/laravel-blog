@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Article;
 use App\Models\Category;
 use App\Models\Article_Category;
+use App\Models\Flash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Auth;
 
 class ArticleController extends Controller
 {
@@ -21,6 +23,7 @@ class ArticleController extends Controller
 
         //$article = Article::latest()->where('user_id',2)->get();
         $article = Article::articles();
+        
         return view('articles', [
             'articles' => $article/*,
             'cat' => Article::has('categories')->with('categories')->get()*/
@@ -34,11 +37,17 @@ class ArticleController extends Controller
      */
     public function create(Category $categories)
     {
+        if (Auth::check()) {
         $categories = Category::lists('name');
 
-        return view('articles/create', [
+        return view('articles.create', [
             'category' => $categories
         ]);
+    }else{
+        Session::flash('danger', 'Veuillez vous connecter pour écrire un article');
+
+        return redirect()->route('articles.index');
+    }
     }
 
     /**

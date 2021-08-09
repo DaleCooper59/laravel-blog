@@ -4,6 +4,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ArticleController;
 use App\Models\Article;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\SessionController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -27,5 +30,16 @@ Route::get('articles/edit/{article}', [ArticleController::class,'edit'])->name('
 Route::post('articles/update/{article}', [ArticleController::class,'update'])->name('articles.update');
 Route::get('articles/destroy/{article}', [ArticleController::class,'destroy'])->name('articles.destroy');
 
-
+//categories
 Route::resource('categories', '\App\Http\Controllers\CategoryController');
+
+//Register
+//Route::resource('registers', '\App\Http\Controllers\RegisterController');
+
+Route::get('registers/create', [RegisterController::class,'index'])->name('registers.create')->middleware('guest');
+Route::post('registers/store', [RegisterController::class,'store'])->name('registers.store')->middleware('guest');
+
+//session
+Route::post('sessions/logout', [SessionController::class,'logout'])->name('sessions.logout')->middleware('auth');
+Route::get('sessions/login', [SessionController::class,'login'])->name('sessions.login')->middleware('guest');
+Route::post('sessions/storeLogin', [SessionController::class,'storeLogin'])->name('sessions.storeLogin')->middleware('guest');

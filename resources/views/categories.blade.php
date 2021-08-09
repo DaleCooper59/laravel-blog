@@ -2,14 +2,17 @@
 
 @section('content')
     <div class="flex content-center h-screen">
+
         <div class="m-auto  text-center">
         @section('h1')
             <h1 class="text-3xl">
                 Les catégories d'article
             </h1>
         @endsection
-        <table class="table-auto h-full w-full">
 
+        @include('components/flashMessage')
+
+        <table class="table-auto h-full w-full">
 
             <thead>
                 <tr class="bg-green-200">
@@ -21,31 +24,33 @@
 
                     <tr>
                         <th id="aa" scope="row">N°</th>
-                        <td class=" text-2xl"> <a href="{{route('categories.show', $category->id)}}">{{ $category->id }}</a>  - </td>
+                        <td class=" text-2xl"> <a
+                                href="{{ route('categories.show', $category->id) }}">{{ $category->id }}</a> - </td>
 
                         <td class="text-2xl">{{ $category->name }}</td>
-                        <td><a href="{{route('categories.edit', $category->id)}}"  
-                            class="bg-violet-300 text-white active:bg-violet-300 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                            type="button">Modifier
-                        </a>
+                        <td><a href="{{ route('categories.edit', $category->id) }}"
+                                class="bg-violet-300 text-white active:bg-violet-300 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                type="button">Modifier
+                            </a>
                         </td>
                         <td>
                             <form action="{{ route('categories.destroy', $category->id) }}" method="post">
                                 @csrf
                                 {{ method_field('DELETE') }}
-                                <button 
-                            class="bg-red-600 text-white active:bg-red-900 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                            type="submit">
-                            <i class="fas fa-heart"></i> Effacer la catégorie
-                            </button>
-                    </form></td>
+                                <button
+                                    class="bg-red-600 text-white active:bg-red-900 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                    type="submit">
+                                    <i class="fas fa-heart"></i> Effacer la catégorie
+                                </button>
+                            </form>
+                        </td>
                     </tr>
 
                 @endforeach
             </tbody>
         </table>
         <a href="{{ route('categories.create') }}">Créer une catégorie</a>
-        
+
 
     </div>
 </div>
