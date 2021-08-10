@@ -21,17 +21,22 @@
 
         <div class="form-group">
             <label for="name">Catégorie</label>
-            <input type="text" name="name" value="{{ $category->name }}" class="form-control" placeholder="Catégorie">
-            <label for="parent_id">Catégorie</label>
-            <select name="parent_id" id="parent_id">
+            <input type="text" name="name" value="" class="form-control" placeholder="{{ $category->name }}">
+            <br><br>
+            
+             <label for="parent_id">Catégorie</label>
+           <select name="parent_id" id="parent_id" >
                 
-                    <option value="{{ $category->parent_id }}">{{ $category->name }}</option>
+                @foreach ($categories as $cat)
+                    <option  value="{{ $cat->id }}">{{ $cat->name }}</option>
+                @endforeach
+                    
             </select>
 
         </div>
 
         <button type="submit" class="btn btn-primary">envoyer</button>
-
+ 
     </form>
 
 @endsection

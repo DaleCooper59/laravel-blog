@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Article;
 use App\Models\Category;
 use App\Models\Article_Category;
@@ -40,8 +41,10 @@ class ArticleController extends Controller
         if (Auth::check()) {
         $categories = Category::lists('name');
 
+
         return view('articles.create', [
-            'category' => $categories
+            'category' => $categories,
+            'author' =>Auth::user()
         ]);
     }else{
         Session::flash('danger', 'Veuillez vous connecter pour écrire un article');
@@ -68,16 +71,18 @@ class ArticleController extends Controller
             'user_id' => 'required'
         ]);
 
-        
-        Article::create([
+
+        $article = Article::create([
             'title' => $request->title,
             'category' => $request->category,
             'content' => $request->content,
             'picture' => $request->picture,
             'slug' => $request->slug,
-            'user_id' => $request->user_id // => ce sera l'id de l'user à l'avenir
+            'user_id' => $request->user_id 
         ]);
 
+        $article->categories()->attach($request->category);
+       
 
         Session::flash('success', 'Votra article a bien été publié');
 
@@ -138,11 +143,13 @@ class ArticleController extends Controller
 
         $article->update([
             'title' => $request->title,
-            'category_id' => $request->category,
             'content' => $request->content,
             'picture' => $request->picture,
-            'slug' => $request->slug
+            'slug' => $request->slug,
+            
         ]);
+
+        $article->categories()->sync($request->category);
 
         $article->save();
 
@@ -159,6 +166,8 @@ class ArticleController extends Controller
      */
     public function destroy(Article $article)
     {
+       
+        Article_Category::where('article_id',$article->id )->delete('article_category');
         $article->delete();
 
         Session::flash('success', 'L\' article a bien été supprimé');

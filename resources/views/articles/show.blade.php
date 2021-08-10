@@ -12,7 +12,6 @@
     <div class="pull-right">
         <a class="btn btn-primary" href="{{ route('articles.index') }}"> Retour sur la liste des articles</a>
     </div>
-
     <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group">
@@ -58,6 +57,9 @@
     
 
     <section class="grid grid-cols-12 w-screen my-4 space-y-4">
+        @foreach ($article->comments as $comment)
+            @dd($comment->user_id->username)
+       
          <article class="col-span-6 col-start-6 flex bg-gray-200 rounded space-x-3">
       
         <div>
@@ -66,15 +68,15 @@
 
         <header>
             <h3 class="font-bold">
-                John
+                
             </h3>
             <p class="text-xs">posted 8 months ago</p>
 
         </header>
 
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut omnis est repudiandae sit aspernatur in magni, quasi
-            fugit culpa a, dolorum excepturi ab amet? Culpa repellendus sunt laboriosam dolor doloribus!</p>
-  </article>
+        <p>{{$comment->content}}</p>
+  </article> 
+  @endforeach
     </section>
     
     

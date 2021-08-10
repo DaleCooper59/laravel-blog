@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Article;
+use App\Models\Article_Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
@@ -21,28 +22,32 @@ class CategoryController extends Controller
         ]);
     }
 
-    
+
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Category $categories)
     {
-        return view('categories/create');
+        $categories = Category::lists();
+        return view('categories/create',[
+            'categories' => $categories
+        ]);
     }
 
     public function store(Request $request)
     {
-        
+
         $request->validate([
-            'name' => 'required'    
+            'name' => 'required'
         ]);
-        
+
         Category::create([
-            'name' => $request->name
+            'name' => $request->name,
+            'parent_id' => $request->parent_id === 0 ? null : $request->parent_id
         ]);
-        
+
         Session::flash('success', 'Votra catégorie a bien été créée');
         return redirect()->route('categories.index');
     }
@@ -57,11 +62,11 @@ class CategoryController extends Controller
     {
         return view('categories.show', [
             'category' => $category,
-            'article' => Article::where('category_id', $category->id)->get()
+            'article' => $category->articles()->get()
         ]);
     }
 
-    
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -70,8 +75,10 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
+        $categories = Category::lists();
         return view('categories.edit', [
-            'category' => $category
+            'category' => $category,
+            'categories' => $categories
         ]);
     }
 
@@ -84,14 +91,15 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-      
+
         $request->validate([
-            'name' => 'required'
+            'name' => 'required',
+            'parent_id' => 'required'
         ]);
 
-
         $category->update([
-            'name' => $request->name
+            'name' => $request->name,
+            'parent_id' => $request->parent_id
         ]);
 
         $category->save();
@@ -109,8 +117,8 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        Article::where('category_id', $category->id)->update(['category_id' => null]);
-        
+
+        Article_Category::where('category_id',$category->id )->update(['category_id' => null]);
         $category->delete();
 
         Session::flash('success', 'La categorie a bien été supprimée');

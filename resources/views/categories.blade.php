@@ -12,6 +12,12 @@
 
         @include('components/flashMessage')
 
+        <a href="{{ route('articles.index') }}"
+            class="bg-violet-100 hover:bg-violet-200 text-white active:bg-violet-300 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+            type="button">
+            <i class="fas fa-heart"></i> Revenir aux articles
+        </a>
+        <br><br>
         <table class="table-auto h-full w-full">
 
             <thead>
@@ -49,7 +55,11 @@
                 @endforeach
             </tbody>
         </table>
-        <a href="{{ route('categories.create') }}">Créer une catégorie</a>
+        
+        <a href="{{ route('categories.create') }}"
+        class="bg-indigo-300 hover:bg-indigo-400 text-white active:bg-violet-300 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+        type="button">Créer une catégorie</a>
+
 
 
     </div>

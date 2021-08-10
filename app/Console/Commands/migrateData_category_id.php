@@ -39,23 +39,17 @@ class migrateData_category_id extends Command
      */
     public function handle()
     {
-        //$pivots = Article_Category::all();
         $articles=Article::all();
         $tab = [];
-        //$tab2 = [];
+      
+       
         foreach ($articles as $article) {
-            $tab[] = $article->category_id;
+            $tab[] = empty($article->category_id) === true || $article->category_id === 0 ? 1 : $article->category_id;
         }
-
-        dump($articles);
-
-        /*foreach ($pivots as $pivot) {
-            $tab2[] = $pivot->category_id;
-        }
-        */
+ 
         $article->categories()->sync($tab);
 
-        //$t = array_replace($tab2,$tab);
+        
 
        
     }

@@ -103,7 +103,7 @@
                         
                         <input
                             class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4"
-                            id="grid-city" name="user_id" type="int" value="">
+                            id="grid-city" name="user_id" type="hidden" value="{{$author->id}}" >
                     </div>
 
                 </div>
