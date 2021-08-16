@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ArticleController;
 use App\Models\Article;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\SessionController;
 
@@ -33,6 +34,12 @@ Route::get('articles/destroy/{article}', [ArticleController::class,'destroy'])->
 //categories
 Route::resource('categories', '\App\Http\Controllers\CategoryController');
 
+//Comments
+Route::post('comments/store', [CommentController::class,'store'])->name('comments.store')->middleware('auth');
+Route::get('comments/edit/{comment}', [CommentController::class,'edit'])->name('comments.edit')->middleware('auth');
+Route::post('comments/update/{comment}', [CommentController::class,'update'])->name('comments.update')->middleware('auth');
+Route::get('comments/destroy/{comment}', [CommentController::class,'destroy'])->name('comments.destroy')->middleware('auth');
+
 //Register
 //Route::resource('registers', '\App\Http\Controllers\RegisterController');
 
@@ -43,3 +50,4 @@ Route::post('registers/store', [RegisterController::class,'store'])->name('regis
 Route::post('sessions/logout', [SessionController::class,'logout'])->name('sessions.logout')->middleware('auth');
 Route::get('sessions/login', [SessionController::class,'login'])->name('sessions.login')->middleware('guest');
 Route::post('sessions/storeLogin', [SessionController::class,'storeLogin'])->name('sessions.storeLogin')->middleware('guest');
+

@@ -37,7 +37,7 @@ class CreateTables extends Migration
             $table->bigIncrements('id')->unsigned();
             $table->string('title')->unique();
             $table->string('content')->unique();
-            $table->string('picture')->unique();
+            $table->string('picture');
             $table->string('slug');
             $table->bigInteger('user_id')->unsigned()->index()->nullable()->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users');

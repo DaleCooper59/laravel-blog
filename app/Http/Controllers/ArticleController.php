@@ -6,10 +6,12 @@ use App\Models\User;
 use App\Models\Article;
 use App\Models\Category;
 use App\Models\Article_Category;
+use App\Models\Comment;
 use App\Models\Flash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class ArticleController extends Controller
 {
@@ -19,15 +21,31 @@ class ArticleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Article $article)
+    public function index(Article $article, Request $request)
     {
 
-        //$article = Article::latest()->where('user_id',2)->get();
         $article = Article::articles();
-        
+
+        $s = $request->search;
+        if ($s) {
+            return view('articles', [
+                'articles' => Article::where('title', 'like', '%' . $s . '%')->orWhere('content', 'like', '%' . $s . '%')->get(),
+            ]);
+        }
+
         return view('articles', [
-            'articles' => $article/*,
-            'cat' => Article::has('categories')->with('categories')->get()*/
+            'articles' => $article,
+        ]);
+    }
+
+    public function getArticleSearch(Article $article)
+    {
+        $article = Article::latest();
+
+
+
+        return view('articles', [
+            'articles' => $article,
         ]);
     }
 
@@ -39,18 +57,18 @@ class ArticleController extends Controller
     public function create(Category $categories)
     {
         if (Auth::check()) {
-        $categories = Category::lists('name');
+            $categories = Category::lists('name');
 
 
-        return view('articles.create', [
-            'category' => $categories,
-            'author' =>Auth::user()
-        ]);
-    }else{
-        Session::flash('danger', 'Veuillez vous connecter pour écrire un article');
+            return view('articles.create', [
+                'category' => $categories,
+                'author' => Auth::user()
+            ]);
+        } else {
+            Session::flash('danger', 'Veuillez vous connecter pour écrire un article');
 
-        return redirect()->route('articles.index');
-    }
+            return redirect()->route('articles.index');
+        }
     }
 
     /**
@@ -61,28 +79,35 @@ class ArticleController extends Controller
      */
     public function store(Request $request)
     {
-
+        
         $request->validate([
             'title' => 'required',
             'category' => 'required',
             'content' => 'required',
-            'picture' => 'required',
+            'picture' => 'required|file',
             'slug' => 'required',
             'user_id' => 'required'
         ]);
+
+        $path = $request->picture->storeAs(
+            'picture_articles',
+            time() . '.' . $request->picture->extension(),
+            'public'
+        );
 
 
         $article = Article::create([
             'title' => $request->title,
             'category' => $request->category,
             'content' => $request->content,
-            'picture' => $request->picture,
+            'picture' => $path,
             'slug' => $request->slug,
-            'user_id' => $request->user_id 
+            'user_id' => $request->user_id
         ]);
 
-        $article->categories()->attach($request->category);
-       
+        if ($request->category !== 'autre') {
+            $article->categories()->attach($request->category);
+        }
 
         Session::flash('success', 'Votra article a bien été publié');
 
@@ -96,12 +121,21 @@ class ArticleController extends Controller
      * @param  \App\article  $article
      * @return \Illuminate\Http\Response
      */
-    public function show(Article $article)
+    public function show(Article $article, Comment $comments)
     {
 
-        return view('articles.show', [
-            'article' => $article
 
+        $comments = $article->comments()->get();
+
+        $idUserComment = $article->comments()->pluck('user_id')->first();
+        $user = User::find($idUserComment);
+
+        $username = $user === null ? '' : $user->username;
+
+        return view('articles.show', [
+            'article' => $article,
+            'comments' => $comments,
+            'username' => $username
         ]);
     }
 
@@ -136,17 +170,23 @@ class ArticleController extends Controller
             'title' => 'required',
             'category' => 'required',
             'content' => 'required',
-            'picture' => 'required',
+            'picture' => 'required|file',
             'slug' => 'required'
         ]);
 
+        $path = $request->file('picture')->storeAs(
+            'picture_articles', 
+            time() . '.' . $request->picture->extension(),
+            'public'
+        );
 
+        
         $article->update([
             'title' => $request->title,
             'content' => $request->content,
-            'picture' => $request->picture,
+            'picture' => $path,
             'slug' => $request->slug,
-            
+
         ]);
 
         $article->categories()->sync($request->category);
@@ -166,8 +206,10 @@ class ArticleController extends Controller
      */
     public function destroy(Article $article)
     {
-       
-        Article_Category::where('article_id',$article->id )->delete('article_category');
+
+
+        Article_Category::where('article_id', $article->id)->delete('article_category');
+        $article->comments()->delete();
         $article->delete();
 
         Session::flash('success', 'L\' article a bien été supprimé');

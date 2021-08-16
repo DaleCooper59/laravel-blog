@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class RegisterController extends Controller
 {
@@ -20,14 +21,22 @@ class RegisterController extends Controller
 
          $request->validate([
             'username' => ['required','min:3','max:80', Rule::unique('users', 'username')],
+            'avatar' => ['required','file'],
             'name' => ['required'],
             'email' => ['required','email',Rule::unique('users', 'email')],
             'password' => ['required','min:8', 'confirmed',Rule::unique('users', 'password')],
         ]);
 
         
+        $path = $request->avatar->storeAs(
+            'avatar_users', 
+            time() . '.' . $request->avatar->extension(),
+            'public'
+        );
+
         $user = User::create([
             'username' => $request->username,
+            'avatar' => $path,
             'email' => $request->email,
             'name' => $request->name,
             'remember_token' => $request->_token,

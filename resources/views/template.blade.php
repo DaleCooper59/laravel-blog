@@ -21,14 +21,15 @@
 <body>
     @yield('header')
 
-    <div class="grid container mx-auto w-screen">
+    <div class="box-border">
 
         @yield('h1')
 
         @yield('content')
     </div>
 
-    @yield('footer')
+    @include('./components/footer')
+    
     <script src="{{ asset('js/app.js') }}" type="text/js"></script>
     <script src="{{ asset('js/custom.js') }}" type="text/js"></script>
 </body>

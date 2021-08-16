@@ -1,9 +1,7 @@
 @extends('template')
 
-
-<h1>Connectez vous à votre compte</h1>
-
-<main class="px-6 py-8 bg-green-200 outline-none mx-auto max-w-lg">
+<main class="px-6 py-8 bg-green-200 outline-none mt-16 mx-auto max-w-lg">
+    <h1 class="m-3 text-2xl text-center">Connectez vous à votre compte</h1>
     <form action="{{route('sessions.storeLogin')}}" method="post">
         @csrf
         <div class="mb-6">
@@ -41,8 +39,9 @@
         </div>
 
 
-        <div class="mb-6">
-            <button type="submit" class="bg-white hover:bg-green-200 hover:text-white text-black font-bold py-2 px-4 rounded-full">Créer le compte</button>
+        <div class="mb-6 flex justify-around">
+            <button type="submit" class="bg-white hover:bg-green-200 hover:text-white text-black font-bold py-2 px-4 rounded-full">Se connecter</button>
+            <a href="{{route('registers.create')}}" class="bg-white hover:bg-green-200 hover:text-white text-black font-bold py-2 px-4 rounded-full">Créer un compte</a>
         </div>
     </form>
 </main>

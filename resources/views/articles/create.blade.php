@@ -1,11 +1,19 @@
 @extends('template')
 
 @section('content')
+<div class="abolute left-1 top-1">
+    <a href="{{route('articles.index')}}" >
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 15l-3-3m0 0l3-3m-3 3h8M3 12a9 9 0 1118 0 9 9 0 01-18 0z" />
+      </svg>
+</a>
+</div>
+
 
     <div class="card uper">
         <div class="card-header">
         @section('h1')
-            <h1 class="text-indigo-300">Ajouter un article</h1>
+            <h1 class="mt-16 text-3xl text-center text-Cambridge_blue">Ajouter un article</h1>
         @endsection
     </div>
 
@@ -20,7 +28,7 @@
             </div><br />
         @endif
 
-        <form method="post" action="{{ route('articles.store') }}">
+        <form method="post" action="{{ route('articles.store') }}" enctype="multipart/form-data">
             . @csrf
             <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col my-2">
                 <div class="-mx-3 md:flex mb-6">
@@ -33,7 +41,7 @@
                             class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-red rounded py-3 px-4 mb-3"
                             id="title" type="text" name="title" placeholder="Jane" value="{{ old('title') }}">
 
-                            @error('title')
+                        @error('title')
                             <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
                         @enderror
                     </div>
@@ -52,15 +60,10 @@
 
                                     <option value="{{ $c->id }}">{{ $c->name }}</option>
                                 @endforeach
-                                    <option value="autre">Autre</option>
+                                <option value="autre">Autre</option>
+
                             </select>
-                            <div
-                                class="pointer-events-none absolute pin-y pin-r flex items-center px-2 text-grey-darker">
-                                <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                    <path
-                                        d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
-                                </svg>
-                            </div>
+
                         </div>
                         @error('category')
                             <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
@@ -68,30 +71,31 @@
                     </div>
 
                 </div>
-                <div class="md:w-1/2 px-3">
-                  <label for="content"> Contenu</label>
-                    <textarea class="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none" rows="4"
-                        id="content" name="content" value="{{old('content')}}">
-                           
+                <div class=" px-3">
+                    <label for="content" class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2">
+                        Contenu</label>
+                    <textarea class="w-full py-2 text-gray-700 border rounded-lg focus:outline-none" rows="4"
+                        id="content" name="content" value="{{ old('content') }}" placeholder="Ecrivez votre article">
+
                         </textarea>
-                        @error('content')
-                            <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
-                        @enderror
+                    @error('content')
+                        <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
+                    @enderror
                 </div>
 
                 <div class="-mx-3 md:flex mb-6">
-                    <div class="md:w-full px-3">
+                    <div class="md:w-1/2 px-3">
                         <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
                             for="picture">
                             Image
                         </label>
                         <input
                             class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 mb-3"
-                            id="picture" name="picture" type="text" >
+                            id="picture" name="picture" type="file" value="{{ old('picture') }}">
 
                     </div>
                 </div>
-                <div class="-mx-3 md:flex mb-2">
+                <div class="-mx-3 mb-2">
                     <div class="md:w-1/2 px-3 mb-6 md:mb-0">
                         <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
                             for="grid-city">
@@ -99,15 +103,19 @@
                         </label>
                         <input
                             class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4"
-                            id="grid-city" name="slug" type="text" placeholder="Albuquerque">
-                        
+                            id="grid-city" name="slug" type="text" value="{{ old('slug') }}" placeholder="Albuquerque">
+
                         <input
                             class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4"
-                            id="grid-city" name="user_id" type="hidden" value="{{$author->id}}" >
+                            id="grid-city" name="user_id" type="hidden" value="{{ $author->id }}">
                     </div>
 
                 </div>
-                <button type="submit" class="btn btn-primary">Publier</button>
+                <div class="text-center">
+                    <button type="submit"
+                        class="bg-Cambridge_blue hover:bg-Laurel_green hover:text-white text-black font-bold w-40 m-10 py-2 px-4 rounded-full">Publier</button>
+
+                </div>
             </div>
         </form>
 
