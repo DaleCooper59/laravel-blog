@@ -66,6 +66,8 @@
                             </div>
                         </div>
                     @endforeach
+
+                    {{$articles->links()}}
                 @endif
             </ul>
         </div>

@@ -24,12 +24,13 @@ class ArticleController extends Controller
     public function index(Article $article, Request $request)
     {
 
+
         $article = Article::articles();
 
         $s = $request->search;
         if ($s) {
             return view('articles', [
-                'articles' => Article::where('title', 'like', '%' . $s . '%')->orWhere('content', 'like', '%' . $s . '%')->get(),
+                'articles' => $article->where('title', 'like', '%' . $s . '%')->orWhere('content', 'like', '%' . $s . '%')->get(),
             ]);
         }
 
@@ -38,16 +39,14 @@ class ArticleController extends Controller
         ]);
     }
 
-    public function getArticleSearch(Article $article)
+    /*public function getArticleSearch(Article $article)
     {
         $article = Article::latest();
-
-
 
         return view('articles', [
             'articles' => $article,
         ]);
-    }
+    }*/
 
     /**
      * Show the form for creating a new resource.
@@ -79,7 +78,7 @@ class ArticleController extends Controller
      */
     public function store(Request $request)
     {
-        
+
         $request->validate([
             'title' => 'required',
             'category' => 'required',
@@ -130,6 +129,7 @@ class ArticleController extends Controller
         $idUserComment = $article->comments()->pluck('user_id')->first();
         $user = User::find($idUserComment);
 
+
         $username = $user === null ? '' : $user->username;
 
         return view('articles.show', [
@@ -175,12 +175,12 @@ class ArticleController extends Controller
         ]);
 
         $path = $request->file('picture')->storeAs(
-            'picture_articles', 
+            'picture_articles',
             time() . '.' . $request->picture->extension(),
             'public'
         );
 
-        
+
         $article->update([
             'title' => $request->title,
             'content' => $request->content,

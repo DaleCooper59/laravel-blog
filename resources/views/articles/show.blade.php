@@ -14,7 +14,7 @@
     @include('../components/flashMessage')
 
     <div class="p-1">
-        <a class="" href="{{ route('articles.index') }}">
+        <a class="" href="{{ route('articles.index') }}"> Articles
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                     d="M11 15l-3-3m0 0l3-3m-3 3h8M3 12a9 9 0 1118 0 9 9 0 01-18 0z" />
@@ -36,8 +36,14 @@
             <h2 class="text-gray-800 text-xl font-semibold">{{ $article->title }}</h2>
             <div class="flex justify-center md:justify-end -mt-16">
                 <img class="w-20 h-20 object-cover rounded-full border-2 border-Laurel_green"
-                    src="https://images.unsplash.com/photo-1499714608240-22fc6ad53fb2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=334&q=80">
-            </div>
+                @if($article->users->avatar === 'no-avatar')
+                    src="https://images.unsplash.com/photo-1499714608240-22fc6ad53fb2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=334&q=80"
+                                    
+                @else
+                src="{{ Storage::url($article->users->avatar) }}"
+                @endif
+            >
+                </div>$article->users->avatar
             <span>
                 @if ($article->categories)
                     @foreach ($article->categories as $item)

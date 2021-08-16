@@ -6,16 +6,17 @@
             <article
                 class="lg:col-span-5 lg:col-start-7 col-span-10 col-start-2 flex h-auto bg-gray-200 rounded space-x-3">
                 <div>
+                    @php
+                        $users = $comment->users()->get();
+                    @endphp
                    
-                   <img class="w-40  rounded m-1" src="https://i.pravatar.cc/100?u={{ $comment->user_id }}" alt="">
-                   <!-- <img class="w-40  rounded m-1"
-                   
-                   //if /*(auth()->user()->avatar === 'no-avatar')
-                        src="https://i.pravatar.cc/100?u="    
-                    //else
-                        src="/*Storage::url(auth()->user()->avatar)*/ "
-                    //endif
-                    alt="avatar">-->
+                   <img class="w-40  rounded m-1" 
+                 @if($users[0]->avatar === 'no-avatar')
+                        src="https://i.pravatar.cc/100?u={{ $comment->user_id }}"    
+                    @else
+                        src="{{Storage::url(auth()->user()->avatar)}}"
+                    @endif
+                    alt="avatar">
                 </div>
 
                 <header>

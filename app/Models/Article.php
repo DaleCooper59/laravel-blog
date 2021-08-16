@@ -27,7 +27,8 @@ class Article extends Model
  
     static function articles()
     {
-        return Article::all();
+        //return Article::all();
+        return Article::paginate(5)->withQueryString();
     }
 
    

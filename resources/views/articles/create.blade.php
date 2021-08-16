@@ -33,12 +33,12 @@
             <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col my-2">
                 <div class="-mx-3 md:flex mb-6">
                     <div class="md:w-1/2 px-3 mb-6 md:mb-0">
-                        <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
+                        <label class="block uppercase tracking-wide text-gray-400 text-xs font-bold mb-2"
                             for="title">
                             Titre
                         </label>
                         <input
-                            class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-red rounded py-3 px-4 mb-3"
+                            class="appearance-none block w-full bg-gray-lighter text-gray-400 border border-red rounded py-3 px-4 mb-3"
                             id="title" type="text" name="title" placeholder="Jane" value="{{ old('title') }}">
 
                         @error('title')
@@ -47,13 +47,13 @@
                     </div>
 
                     <div class="md:w-1/2 px-3">
-                        <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
+                        <label class="block uppercase tracking-wide text-gray-400 text-xs font-bold mb-2"
                             for="categories">
                             Catégorie
                         </label>
                         <div class="relative">
                             <select
-                                class="block appearance-none w-full bg-grey-lighter border border-grey-lighter text-grey-darker py-3 px-4 pr-8 rounded"
+                                class="block appearance-none w-full bg-gray-lighter border border-grey-lighter text-gray-400 py-3 px-4 pr-8 rounded"
                                 id="category" name="category" value="{{ old('category') }}">
 
                                 @foreach ($category as $c)
