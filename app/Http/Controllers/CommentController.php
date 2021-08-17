@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+
 use App\Models\Article;
 use App\Models\Comment;
+use App\Models\User;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
@@ -11,6 +14,11 @@ use Illuminate\Support\Facades\Session;
 class CommentController extends Controller
 {
 
+    public function index(Comment $comments){
+        return view('comments',[
+            'comments' => $comments
+        ]);
+    }
 
     public function store(Request $request){
     
@@ -26,13 +34,14 @@ class CommentController extends Controller
             'user_id' => $request->user_id
         ]);
 
-        Session::flash('success', 'Votre commentaire a bien été créé');
+        Session::flash('success', 'Votre commentaire est en attente de validation');
 
         return redirect()->back();
     }
 
     public function edit(Comment $comment)
     {
+        
         $article = $comment->articles()->get();
         
         return view('comments.edit', [
@@ -49,12 +58,13 @@ class CommentController extends Controller
         //$id[] = $article[0]->id;
 
         $request->validate([
-            'comment' => 'required|min:60'
+            'comment' => 'required|min:60', 
+            'approuved' => 'boolean'
         ]);
-
 
         $comment->update([
             'content' => $request->comment,
+            'approuved' => $request->has('approuved')? $request->approuved : '',
             'update_at' => now(),
         ]);
 
@@ -80,4 +90,23 @@ class CommentController extends Controller
         Session::flash('success', 'Le commentaire a bien été supprimé');
         return back();
     }
+
+    public function approval(Comment $comments, Article $article, User $user)
+    {
+
+        $comments = $article->comments()->get();
+
+        $idUserComment = $article->comments()->pluck('user_id')->first();
+        $user = User::find($idUserComment);
+
+
+        $username = $user === null ? '' : $user->username;
+        return view('comments.approval', [
+            'comments' => $comments,
+            'article' => $article,
+            'username' => $username
+        ]);
+    }
+
+    
 }

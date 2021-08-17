@@ -36,7 +36,7 @@
 
                                 <td class="text-2xl text-black">{{ $category->name }}</td>
                                 <td><a href="{{ route('categories.edit', $category->id) }}"
-                                        class="bg-violet-300 text-white active:bg-violet-300 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                        class="text-violet-300 active:bg-violet-300 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                                         type="button">Modifier
                                     </a>
                                 </td>
@@ -45,7 +45,7 @@
                                         @csrf
                                         {{ method_field('DELETE') }}
                                         <button
-                                            class="bg-red-600 text-white active:bg-red-900 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                            class="text-red-600 active:bg-red-900 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                                             type="submit">
                                             <i class="fas fa-heart"></i> Effacer la catégorie
                                         </button>

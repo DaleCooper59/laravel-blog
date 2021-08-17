@@ -35,6 +35,7 @@
         <div class="shadow-shadowArticle p-5 text-center">
             <h2 class="text-gray-800 text-xl font-semibold">{{ $article->title }}</h2>
             <div class="flex justify-center md:justify-end -mt-16">
+               
                 <img class="w-20 h-20 object-cover rounded-full border-2 border-Laurel_green"
                 @if($article->users->avatar === 'no-avatar')
                     src="https://images.unsplash.com/photo-1499714608240-22fc6ad53fb2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=334&q=80"
@@ -43,7 +44,7 @@
                 src="{{ Storage::url($article->users->avatar) }}"
                 @endif
             >
-                </div>$article->users->avatar
+                </div>
             <span>
                 @if ($article->categories)
                     @foreach ($article->categories as $item)
@@ -65,16 +66,25 @@
         </div>
 
         <a href="{{ route('articles.edit', $article->id) }}"
-            class="bg-violet-300 text-white active:bg-violet-300 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+            class="text-violet-300 active:bg-violet-300 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
             type="button">
             <i class="fas fa-heart"></i> Modifier l'article
         </a>
 
         <a href="{{ route('articles.destroy', $article->id) }}"
-            class="bg-red-600 text-white active:bg-red-900 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+            class="text-red-600 active:bg-red-900 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
             type="button">
             <i class="fas fa-heart"></i> Effacer l'article
         </a>
+
+        @can('approval')
+            <a href="{{ route('comments.approval', $article->id) }}"
+            class="text-red-600 active:bg-red-900 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+            type="button">
+            <i class="fas fa-heart"></i> Approuver les commentaires
+        </a>
+        @endcan
+        
     </div>
 
     @auth

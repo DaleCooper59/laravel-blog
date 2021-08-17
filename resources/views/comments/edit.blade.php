@@ -30,6 +30,21 @@
                     </textarea>
                 </div>
 
+               @can('approval')
+                   <div class="block">
+                    <span class="text-gray-700">Approuver</span>
+                    <div class="mt-2">
+                      
+                        <label class="inline-flex items-center">
+                          <input type="checkbox" class="form-checkbox" name="approuved" value="1">
+                          <span class="ml-2">Oui</span>
+                        </label>
+                     
+                    </div>
+                  </div>
+               @endcan
+                
+               
                 <input type="hidden" name="article_id" value="{{$article[0]->id}}">
                 
                 <div class="">

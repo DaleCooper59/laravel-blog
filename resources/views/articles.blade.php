@@ -6,7 +6,7 @@
 
     @section('h1')
 
-        <div class="container flex-1 p-4 flex flex-col justify-center items-center h-4/5 static">
+        <div class="flex-1 p-4 flex flex-col justify-center items-center h-4/5 static">
             <h1 class=" text-Cambridge_blue text-center text-5xl mt-32 lg:m-4 py-16">Liste des articles</h1>
 
             @include('components/button-create_article')

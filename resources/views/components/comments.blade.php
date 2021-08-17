@@ -1,22 +1,22 @@
 <section class="grid grid-cols-12 w-full my-4 space-y-4">
 
-    @if (!empty($comments) && count($comments) > 0)
+    @if(!empty($comments) && count($comments) > 0)
+         
         @foreach ($comments as $comment)
 
-            <article
-                class="lg:col-span-5 lg:col-start-7 col-span-10 col-start-2 flex h-auto bg-gray-200 rounded space-x-3">
+        @if($comment->approuved === 1)
+            <article class="lg:col-span-5 lg:col-start-7 col-span-10 col-start-2 flex h-auto bg-gray-200 rounded space-x-3">
                 <div>
                     @php
                         $users = $comment->users()->get();
+                        $count = 0;
                     @endphp
-                   
-                   <img class="w-40  rounded m-1" 
-                 @if($users[0]->avatar === 'no-avatar')
-                        src="https://i.pravatar.cc/100?u={{ $comment->user_id }}"    
+
+                    <img class="w-40  rounded m-1" 
+                    @if ($users[0]->avatar === 'no-avatar') src="https://i.pravatar.cc/100?u={{ $comment->user_id }}"    
                     @else
-                        src="{{Storage::url(auth()->user()->avatar)}}"
-                    @endif
-                    alt="avatar">
+                            src="{{ Storage::url($users[0]->avatar) }}" 
+                    @endif alt="avatar">
                 </div>
 
                 <header>
@@ -24,7 +24,7 @@
                     <p class="text-xs">Posté le {{ $comment->created_at->diffForHumans() }}</p>
                 </header>
 
-                <p class="overflow-scroll">{{ $comment->content }}</p>
+                <p class="truncate hover:overflow-auto p-3">{{ $comment->content }}</p>
 
                 <a href="{{ route('comments.edit', $comment->id) }}"
                     class="-backdrop-hue-rotate-15 rounded-bl-xl bg-Laurel_green flex focus:outline-none font-bold h-10 items-center outline-none p-1.5 shadow text-center text-white text-xs uppercase"
@@ -38,8 +38,11 @@
                     <i class="fas fa-heart"></i> Effacer
                 </a>
             </article>
+           @else 
+            <span></span>
+            @endif
         @endforeach
     @else
-        <span>Pas de commentaires</span>
+     <span>Pas de commentaires</span>
     @endif
 </section>

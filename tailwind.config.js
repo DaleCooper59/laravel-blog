@@ -71,7 +71,9 @@ module.exports = {
         variants: {
             extend: {
                 filter: ['hover', 'focus'],
+                overflow: ['hover', 'focus'],
             },
+            
         },
         plugins: [],
     }
