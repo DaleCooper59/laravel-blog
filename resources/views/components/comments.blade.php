@@ -43,6 +43,6 @@
             @endif
         @endforeach
     @else
-     <span>Pas de commentaires</span>
+     <p class="text-center">Pas de commentaires</p>
     @endif
 </section>

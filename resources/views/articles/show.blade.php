@@ -4,7 +4,7 @@
 
 
 @section('h1')
-    <div class="p-2">
+    <div class="p-2 bg-green-100 h-20">
         <h1 class=" text-3xl text-center text-Cambridge_blue"> {{ $article->title }}</h1>
     </div>
 
@@ -14,8 +14,8 @@
     @include('../components/flashMessage')
 
     <div class="p-1">
-        <a class="" href="{{ route('articles.index') }}"> Articles
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <a class="flex pl-6" href="{{ route('articles.index') }}"> Articles
+            <svg class="ml-1 text-Laurel_green h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                     d="M11 15l-3-3m0 0l3-3m-3 3h8M3 12a9 9 0 1118 0 9 9 0 01-18 0z" />
             </svg></a>
@@ -65,7 +65,8 @@
             </a>
         </div>
 
-        <a href="{{ route('articles.edit', $article->id) }}"
+        @auth
+            <a href="{{ route('articles.edit', $article->id) }}"
             class="text-violet-300 active:bg-violet-300 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
             type="button">
             <i class="fas fa-heart"></i> Modifier l'article
@@ -84,7 +85,7 @@
             <i class="fas fa-heart"></i> Approuver les commentaires
         </a>
         @endcan
-        
+         @endauth
     </div>
 
     @auth
