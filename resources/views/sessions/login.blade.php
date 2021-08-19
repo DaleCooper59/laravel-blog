@@ -14,18 +14,6 @@
                 <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
             @enderror
         </div>
-        
-       <!--
-        <div class="mb-6">
-            <label for="email" class="block mb-2 text-gray-600">
-                e@mail
-            </label>
-            <input type="text" class="border border-gray-500 p-2 w-full" name="email" id="email" value="{{old('email')}}" required>
-
-            @error('email')
-                <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
-            @enderror
-        </div>-->
 
         <div class="mb-6">
             <label for="password" class="block mb-2 text-gray-600">

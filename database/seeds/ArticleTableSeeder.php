@@ -14,7 +14,7 @@ class ArticleTableSeeder extends Seeder
     public function run()
     {
         $category = Category::lists()->toArray();
-        factory(App\Models\Article::class, 5)->create();
+        factory(App\Models\Article::class, 50)->create();
 
         // Populate the pivot table
         Article::all()->each(function ($articles) use ($category) {

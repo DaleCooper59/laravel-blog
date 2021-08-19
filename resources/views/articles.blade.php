@@ -13,7 +13,7 @@
 
 
             <button class="lg:block hidden bg-Laurel_green hover:bg-tea_green text-white font-bold mt-8 py-2 px-4
-                     border-b-4 border-black hover:border-gray-400 rounded" @click="open = !open">Menu</button>
+                         border-b-4 border-black hover:border-gray-400 rounded" @click="open = !open">Menu</button>
 
             @include('components/search')
         </div>
@@ -36,13 +36,10 @@
                             <div class=" max-w-md mx-auto bg-white rounded-xl border-2 overflow-hidden md:max-w-2xl">
                                 <div class="md:flex">
                                     <div class="md:flex-shrink-0">
-                                        <img class="h-60 w-full object-cover md:w-48" 
-                                        @if ($article->picture === 'no') 
-                                                src="https://source.unsplash.com/random/"
-                                            
+                                        <img class="h-60 w-full object-cover md:w-48" @if ($article->picture === 'no') src="https://source.unsplash.com/random/"
+                                                
                                         @else
-                                                src="{{ Storage::url($article->picture) }}"
-                                     @endif alt="A cat">
+                                                    src="{{ Storage::url($article->picture) }}" @endif alt="A cat">
                                     </div>
                                     <div class="p-8 w-full">
                                         <div class="uppercase tracking-wide text-sm text-indigo-500 font-semibold">
@@ -67,7 +64,7 @@
                         </div>
                     @endforeach
 
-                    {{$articles->links()}}
+                    {{ $articles->withQueryString()->links() }}
                 @endif
             </ul>
         </div>

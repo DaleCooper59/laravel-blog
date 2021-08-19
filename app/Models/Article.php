@@ -27,9 +27,12 @@ class Article extends Model
  
     static function articles()
     {
-        //return Article::all();
-        return Article::paginate(5)->withQueryString();
+        return Article::all();
     }
 
+    public function scopeSearch($query, $search)
+    {
+        return $query->where('title', 'LIKE', "%$search%");
+    }
    
 }

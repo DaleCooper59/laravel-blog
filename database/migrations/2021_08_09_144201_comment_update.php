@@ -18,10 +18,10 @@ class CommentUpdate extends Migration
             $table->string('content')->unique();
             $table->boolean('approuved');
             $table->timestamps();
-            $table->bigInteger('article_id')->unsigned()->index()->nullable()->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('article_id')->references('id')->on('articles');
-            $table->bigInteger('user_id')->unsigned()->index()->nullable()->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->bigInteger('article_id')->unsigned()->nullable();
+            $table->foreign('article_id')->references('id')->on('articles')->onUpdate('cascade')->onDelete('cascade');
+            $table->bigInteger('user_id')->unsigned()->index()->nullable();
+            $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
             $table->charset = 'utf8mb4';
             $table->collation = 'utf8mb4_unicode_ci';
             $table->engine = 'InnoDB';

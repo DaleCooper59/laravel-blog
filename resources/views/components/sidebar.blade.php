@@ -30,7 +30,7 @@
                     class="py-2 block lg:px-4 px-16 lg:text-black text-gray-600 text-sm lg:hover:bg-black hover:text-white hover:bg-green-500 hover:filter  backdrop-blur-md transition duration-200">Catégories</a>
                 @guest
                
-                <form action="{{ route('sessions.login') }}" method="get">
+                <form action="{{ route('login') }}" method="get">
                     @csrf
                     <button class="w-full py-2 block lg:px-4 px-16 lg:text-black text-gray-600 text-sm lg:hover:bg-black hover:text-white hover:bg-green-500 hover:filter  backdrop-blur-md transition duration-200" type="submit">Se Connecter</button>
                 </form>
@@ -111,7 +111,7 @@
                 </form>
             @else
                 <button class="lg:text-xl ">Hello</button>
-                <form action="{{ route('sessions.login') }}" method="get">
+                <form action="{{ route('login') }}" method="get">
                     @csrf
                     <button type="submit">Se Connecter</button>
                 </form>

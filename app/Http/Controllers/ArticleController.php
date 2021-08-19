@@ -2,16 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use App\Models\Article;
 use App\Models\Category;
 use App\Models\Article_Category;
-use App\Models\Comment;
-use App\Models\Flash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
 
 class ArticleController extends Controller
 {
@@ -24,15 +20,7 @@ class ArticleController extends Controller
     public function index(Article $article, Request $request)
     {
 
-
-        $article = Article::articles();
-
-        $s = $request->search;
-        if ($s) {
-            return view('articles', [
-                'articles' => $article->where('title', 'like', '%' . $s . '%')->orWhere('content', 'like', '%' . $s . '%')->get(),
-            ]);
-        }
+        $article = Article::search($request->search)->paginate(15);
 
         return view('articles', [
             'articles' => $article,
@@ -47,19 +35,14 @@ class ArticleController extends Controller
      */
     public function create(Category $categories)
     {
-        if (Auth::check()) {
-            $categories = Category::lists('name');
+      
+        $categories = Category::lists('name');
 
 
-            return view('articles.create', [
-                'category' => $categories,
-                'author' => Auth::user()
-            ]);
-        } else {
-            Session::flash('danger', 'Veuillez vous connecter pour écrire un article');
-
-            return redirect()->route('articles.index');
-        }
+        return view('articles.create', [
+            'category' => $categories,
+            'author' => Auth::user()
+        ]);
     }
 
     /**
@@ -109,25 +92,19 @@ class ArticleController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\article  $article
+     * @param  \App\Models\Article  $article
      * @return \Illuminate\Http\Response
      */
-    public function show(Article $article, Comment $comments)
+    public function show(Article $article)
     {
-
-
-        $comments = $article->comments()->get();
-
-        $idUserComment = $article->comments()->pluck('user_id')->first();
-        $user = User::find($idUserComment);
-
-
-        $username = $user === null ? '' : $user->username;
-
+        $comments = $article->comments;
+ 
+        $user = $article->comments->pluck('users.username')->first();
+     
         return view('articles.show', [
             'article' => $article,
             'comments' => $comments,
-            'username' => $username
+            'username' => $user === null ? '' : $user
         ]);
     }
 
@@ -135,12 +112,12 @@ class ArticleController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\article  $article
+     * @param  \App\Models\Article  $article
      * @return \Illuminate\Http\Response
      */
     public function edit(Article $article)
     {
-        $categories = Category::lists('name', $article);
+        $categories = Category::lists();
 
         return view('articles.edit', [
             'article' => $article,
@@ -152,7 +129,7 @@ class ArticleController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\article  $article
+     * @param  \App\Models\Article  $article
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Article $article)
@@ -193,7 +170,7 @@ class ArticleController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\article  $article
+     * @param  \App\Models\Article  $article
      * @return \Illuminate\Http\Response
      */
     public function destroy(Article $article)
