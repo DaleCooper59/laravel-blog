@@ -36,7 +36,7 @@ class ArticleController extends Controller
     public function create(Category $categories)
     {
       
-        $categories = Category::lists('name');
+        $categories = Category::lists();
 
 
         return view('articles.create', [
@@ -103,7 +103,7 @@ class ArticleController extends Controller
      
         return view('articles.show', [
             'article' => $article,
-            'comments' => $comments,
+            'comments' => $comments, 
             'username' => $user === null ? '' : $user
         ]);
     }
@@ -135,21 +135,25 @@ class ArticleController extends Controller
     public function update(Request $request, Article $article)
     {
 
+        
         $request->validate([
             'title' => 'required',
             'category' => 'required',
             'content' => 'required',
-            'picture' => 'required|file',
+            'picture' => 'file',
             'slug' => 'required'
         ]);
 
-        $path = $request->file('picture')->storeAs(
+        if($request->file){
+            $path = $request->file('picture')->storeAs(
             'picture_articles',
             time() . '.' . $request->picture->extension(),
             'public'
         );
-
-
+        }else{
+            $path='no';
+        }
+        
         $article->update([
             'title' => $request->title,
             'content' => $request->content,

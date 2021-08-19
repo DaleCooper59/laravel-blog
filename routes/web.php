@@ -5,6 +5,7 @@ use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\SessionController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,6 +18,17 @@ use App\Http\Controllers\SessionController;
 |
 */
 
+
+//listing des articles
+Route::get('articles', [ArticleController::class, 'index'])->name('articles.index');
+//categories
+Route::resource('categories', '\App\Http\Controllers\CategoryController');
+//Route::resource('categories', CategoryController::class);
+Route::resource('users', '\App\Http\Controllers\UserController');
+//possibilité gérer autorisation avec Blade:: et Gate:: !!
+
+
+
 Route::middleware('guest')->group(function () {
 
         Route::get('registers/create', [RegisterController::class, 'index'])->name('registers.create');
@@ -26,9 +38,6 @@ Route::middleware('guest')->group(function () {
         Route::get('sessions/login', [SessionController::class, 'login'])->name('login');
         Route::post('sessions/storeLogin', [SessionController::class, 'storeLogin'])->name('sessions.storeLogin');
 });
-
-//listing des articles
-Route::get('articles', [ArticleController::class, 'index'])->name('articles.index');
 
 
 Route::middleware('auth')->group(function () {
@@ -59,8 +68,3 @@ Route::middleware('auth')->group(function () {
 });
 
 
-//categories
-Route::resource('categories', '\App\Http\Controllers\CategoryController');
-//Route::resource('categories', CategoryController::class);
-
-//possibilité gérer autorisation avec Blade:: et Gate:: !!

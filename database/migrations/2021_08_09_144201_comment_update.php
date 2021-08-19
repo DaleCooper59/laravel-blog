@@ -14,7 +14,7 @@ class CommentUpdate extends Migration
     public function up()
     {
         Schema::create('comments', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->bigIncrements('id')->unsigned();
             $table->string('content')->unique();
             $table->boolean('approuved');
             $table->timestamps();

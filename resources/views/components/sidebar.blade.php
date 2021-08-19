@@ -23,41 +23,51 @@
                 x-transition:leave="transition ease-in duration-150 transform"
                 x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 -translate-y-5"
                 x-show="isHamburgerOpen" x-cloak @click.away="isHamburgerOpen = false">
-               
+
                 <a href="{{ route('articles.index') }}"
                     class="py-2 block lg:px-4 px-16 lg:text-black text-gray-600 text-sm lg:hover:bg-black hover:text-white hover:bg-green-500 hover:filter  backdrop-blur-md transition duration-200">Articles</a>
                 <a href="{{ route('categories.index') }}"
                     class="py-2 block lg:px-4 px-16 lg:text-black text-gray-600 text-sm lg:hover:bg-black hover:text-white hover:bg-green-500 hover:filter  backdrop-blur-md transition duration-200">Catégories</a>
+
+
+                @can('approval')
+                    <a href="{{ route('users.index') }}"
+                        class="py-2 block lg:px-4 px-16 lg:text-black text-gray-600 text-sm lg:hover:bg-black hover:text-white hover:bg-green-500 hover:filter  backdrop-blur-md transition duration-200">Admin</a>
+
+                @endcan
+
                 @guest
-               
-                <form action="{{ route('login') }}" method="get">
-                    @csrf
-                    <button class="w-full py-2 block lg:px-4 px-16 lg:text-black text-gray-600 text-sm lg:hover:bg-black hover:text-white hover:bg-green-500 hover:filter  backdrop-blur-md transition duration-200" type="submit">Se Connecter</button>
-                </form>
-                
-                 <a href="{{ route('registers.create') }}"
+
+                    <form action="{{ route('login') }}" method="get">
+                        @csrf
+                        <button
+                            class="w-full py-2 block lg:px-4 px-16 lg:text-black text-gray-600 text-sm lg:hover:bg-black hover:text-white hover:bg-green-500 hover:filter  backdrop-blur-md transition duration-200"
+                            type="submit">Se Connecter</button>
+                    </form>
+
+                    <a href="{{ route('registers.create') }}"
                         class="py-2 block lg:px-4 px-16 lg:text-black text-gray-600 text-sm lg:hover:bg-black hover:text-white hover:bg-green-500 hover:filter  backdrop-blur-md transition duration-200">S'inscrire</a>
                 @endguest
 
             </nav>
 
             @auth
-               
+
                 <button
-                class="flex items-center justify-between w-full px-6 py-2 mt-6 text-gray-600 hover:bg-gray-100 hover:text-gray-700 focus:outline-none"" @click="
-                isHamburgerOpen=true" title="Menu">
+                    class="flex items-center justify-between w-full px-6 py-2 mt-6 text-gray-600 hover:bg-gray-100 hover:text-gray-700 focus:outline-none"" @click="
+                    isHamburgerOpen=true" title="Menu">
 
-                <span class="mx-4 font-medium">Hello {{ auth()->user()->username }} !!</span>
+                    <span class="mx-4 font-medium">Hello {{ auth()->user()->username }} !!</span>
 
-                <span>
-                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path x-show="! open" d="M9 5L16 12L9 19" stroke="currentColor" stroke-width="2"
-                            stroke-linecap="round" stroke-linejoin="round" style="display: none;"></path>
-                        <path x-show="open" d="M19 9L12 16L5 9" stroke="currentColor" stroke-width="2"
-                            stroke-linecap="round" stroke-linejoin="round"></path>
-                    </svg>
-                </span>
-            </button>
+                    <span>
+                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path x-show="! open" d="M9 5L16 12L9 19" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" style="display: none;"></path>
+                            <path x-show="open" d="M19 9L12 16L5 9" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round"></path>
+                        </svg>
+                    </span>
+                </button>
             @else
                 <button
                     class="flex items-center justify-between w-full px-6 py-2 mt-6 text-gray-600 hover:bg-gray-100 hover:text-gray-700 focus:outline-none"" @click="
@@ -124,7 +134,12 @@
                 class="py-2 block px-4 hover:bg-black hover:filter hover:text-white  transition duration-200">Articles</a>
             <a href="{{ route('categories.index') }}"
                 class="py-2 block px-4 hover:bg-black hover:filter hover:text-white transition duration-200">Catégories</a>
-            
+            @can('approval')
+                <a href="{{ route('users.index') }}"
+                    class="py-2 block px-4 hover:bg-black hover:filter hover:text-white transition duration-200">Admin</a>
+
+            @endcan
+
             @guest
                 <a href="{{ route('registers.create') }}"
                     class="py-2 block px-4 hover:bg-black hover:filter hover:text-white  transition duration-200">S'inscrire</a>

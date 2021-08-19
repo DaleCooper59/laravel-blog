@@ -59,6 +59,8 @@
         </div>
 
         @auth
+       
+        @if(Auth::user()->username === $article->users->name || Auth::user()->username === 'DaleCooper')
             <a href="{{ route('articles.edit', $article->id) }}"
                 class="text-violet-300 active:bg-violet-300 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                 type="button">
@@ -70,7 +72,10 @@
                 type="button">
                 <i class="fas fa-heart"></i> Effacer l'article
             </a>
-
+                
+            @else
+                <p>Vous pouvez modifier l'article que si vous en etes l'auteur</p>
+        @endif
             @can('approval')
                 <a href="{{ route('comments.approval', $article->id) }}"
                     class="text-red-600 active:bg-red-900 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"

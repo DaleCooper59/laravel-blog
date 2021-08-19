@@ -4,8 +4,7 @@
 
 use App\Models\Article;
 use App\Models\User;
-use Faker\Generator as Faker;
-use Illuminate\Support\Str;
+use Faker\Generator as Faker; 
 
 $factory->define(Article::class, function (Faker $faker) {
     $user = User::all()->pluck('id')->toArray();

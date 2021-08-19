@@ -14,7 +14,7 @@ class CreateTables extends Migration
     public function up()
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->bigIncrements('id')->unsigned();
             $table->string('name')->unique();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
@@ -49,7 +49,7 @@ class CreateTables extends Migration
 
 
         Schema::create('categories', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->bigIncrements('id')->unsigned();
             $table->string('name');
             $table->bigInteger('parent_id')->unsigned()->nullable();
             $table->foreign('parent_id')->references('id')->on('categories')->onUpdate('cascade')->onDelete('cascade');
@@ -59,7 +59,7 @@ class CreateTables extends Migration
         });
 
         Schema::create('keywords', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->bigIncrements('id')->unsigned();
             $table->string('name');
             $table->bigInteger('article_id')->unsigned()->nullable();
             $table->foreign('article_id')->references('id')->on('articles')->onUpdate('cascade')->onDelete('cascade');
@@ -70,10 +70,10 @@ class CreateTables extends Migration
 
 
         Schema::create('article_category', function (Blueprint $table) {
-            $table->bigIncrements('id'); 
-            $table->bigInteger('article_id')->unsigned()->index()->nullable();
+            $table->bigIncrements('id')->unsigned(); 
+            $table->bigInteger('article_id')->unsigned()->nullable();
             $table->foreign('article_id')->references('id')->on('articles')->onUpdate('cascade')->onDelete('cascade');
-            $table->bigInteger('category_id')->unsigned()->index()->nullable();
+            $table->bigInteger('category_id')->unsigned()->nullable();
             $table->foreign('category_id')->references('id')->on('categories')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
             $table->charset = 'utf8mb4';

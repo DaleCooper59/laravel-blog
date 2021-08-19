@@ -7,8 +7,6 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Storage;
 
 class RegisterController extends Controller
 {
@@ -17,7 +15,6 @@ class RegisterController extends Controller
     }
 
     public function store(Request $request){
-        //dd($request->password);
 
          $request->validate([
             'username' => ['required','min:3','max:80', Rule::unique('users', 'username')],
@@ -44,6 +41,7 @@ class RegisterController extends Controller
             'password' => $request->password
         ]);
 
+        $user->roles()->attach(2);
 
         Auth::login($user);
 
@@ -51,5 +49,7 @@ class RegisterController extends Controller
 
         return redirect()->route('articles.index');
     }
+
+    
 
 }

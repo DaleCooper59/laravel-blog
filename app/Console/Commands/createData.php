@@ -38,10 +38,6 @@ class createData extends Command
      */
     public function handle()
     {
-       /* Route::get('/c',function(){
-        $article = factory('App\Models\Article')->create();
-        $categorie = factory('App\Models\Category')->create();
-        return $article->categories()->attach(1);
-        });*/
+       
     }
 }
