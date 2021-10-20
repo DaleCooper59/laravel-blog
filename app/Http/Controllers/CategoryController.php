@@ -117,8 +117,7 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-
-        Article_Category::where('category_id',$category->id )->update(['category_id' => null]);
+     
         $category->delete();
 
         Session::flash('success', 'La categorie a bien été supprimée');

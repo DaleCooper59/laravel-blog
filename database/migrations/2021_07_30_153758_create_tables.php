@@ -35,12 +35,12 @@ class CreateTables extends Migration
 
         Schema::create('articles', function (Blueprint $table) {
             $table->bigIncrements('id')->unsigned();
-            $table->string('title')->unique();
+            $table->string('title');
             $table->string('content')->unique();
             $table->string('picture');
             $table->string('slug');
             $table->bigInteger('user_id')->unsigned()->nullable();
-            $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('set null');
             $table->timestamps();
             $table->charset = 'utf8mb4';
             $table->collation = 'utf8mb4_unicode_ci';
@@ -52,7 +52,7 @@ class CreateTables extends Migration
             $table->bigIncrements('id')->unsigned();
             $table->string('name');
             $table->bigInteger('parent_id')->unsigned()->nullable();
-            $table->foreign('parent_id')->references('id')->on('categories')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('parent_id')->references('id')->on('categories')->onUpdate('cascade')->onDelete('set null');
             $table->charset = 'utf8mb4';
             $table->collation = 'utf8mb4_unicode_ci';
             $table->engine = 'InnoDB';
@@ -74,7 +74,7 @@ class CreateTables extends Migration
             $table->bigInteger('article_id')->unsigned()->nullable();
             $table->foreign('article_id')->references('id')->on('articles')->onUpdate('cascade')->onDelete('cascade');
             $table->bigInteger('category_id')->unsigned()->nullable();
-            $table->foreign('category_id')->references('id')->on('categories')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('category_id')->references('id')->on('categories')->onUpdate('cascade')->onDelete('set null');
             $table->timestamps();
             $table->charset = 'utf8mb4';
             $table->collation = 'utf8mb4_unicode_ci';

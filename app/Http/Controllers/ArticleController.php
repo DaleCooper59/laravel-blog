@@ -180,9 +180,6 @@ class ArticleController extends Controller
     public function destroy(Article $article)
     {
 
-
-        Article_Category::where('article_id', $article->id)->delete('article_category');
-        $article->comments()->delete();
         $article->delete();
 
         Session::flash('success', 'L\' article a bien été supprimé');
