@@ -22,6 +22,7 @@
                 x-transition:enter-start="opacity-0 -translate-y-5" x-transition:enter-end="opacity-100 translate-y-0"
                 x-transition:leave="transition ease-in duration-150 transform"
                 x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 -translate-y-5"
+                {{--alpine mobile--}}
                 x-show="isHamburgerOpen" x-cloak @click.away="isHamburgerOpen = false">
 
                 <a href="{{ route('articles.index') }}"
