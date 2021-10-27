@@ -93,7 +93,7 @@
     <!--End Mobile -->
 
     <div
-        class="sidebar shadow-md bg-Cambridge_blue bg-opacity-25 text-black w-1/6 space-y-2 py-5 fixed inset-y-0 left-0 transform -translate-x-full lg:translate-x-0 transition duration-300 ease-out">
+        class="sidebar hidden lg:block shadow-md bg-Cambridge_blue bg-opacity-25 text-black w-1/6 space-y-2 py-5 fixed inset-y-0 left-0 transform -translate-x-full lg:translate-x-0 transition duration-300 ease-out">
         <div href="#" class="flex flex-col items-center lg:space-y-4"><svg xmlns="http://www.w3.org/2000/svg"
                 class="pt-4 w-28 h-28" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="miter" stroke-width="1"
