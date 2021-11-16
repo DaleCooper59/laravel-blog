@@ -43,7 +43,7 @@ class SessionController extends Controller
 
         //if(Hash::check($request->password, $user->passwword)){
             if (Auth::attempt($credentials)) {
-            //session fixation attack prevent
+            
             $request->session()->regenerate();
 
             Session::flash('info', 'Vous êtes connecté');
@@ -54,7 +54,7 @@ class SessionController extends Controller
         
       /*  Session::flash('danger', 'Ca ne correspond pas');
         return back()->withInput();*/
-        return back()->withInput()->withErrors(['error'=>'Incorrect username or password']);
+        return back()->withInput()->withErrors(['error'=>'Incorrect username ou password']);
         
     }
 }

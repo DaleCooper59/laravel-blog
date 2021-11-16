@@ -28,7 +28,7 @@ Route::resource('users', '\App\Http\Controllers\UserController');
 //possibilité gérer autorisation avec Blade:: et Gate:: !!
 
 
-
+//http/middlware
 Route::middleware('guest')->group(function () {
 
         Route::get('registers/create', [RegisterController::class, 'index'])->name('registers.create');

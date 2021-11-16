@@ -53,11 +53,11 @@ class ArticleController extends Controller
      */
     public function store(Request $request)
     {
-
+        //ex 'email' => 'regex:/^.+@.+$/i'
         $request->validate([
             'title' => 'required',
             'category' => 'required',
-            'content' => 'required',
+            'content' => 'required|unique:articles',
             'picture' => 'required|file',
             'slug' => 'required',
             'user_id' => 'required'

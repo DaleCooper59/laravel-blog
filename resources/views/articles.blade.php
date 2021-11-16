@@ -36,7 +36,7 @@
                             <div class=" max-w-md mx-auto bg-white rounded-xl border-2 overflow-hidden md:max-w-2xl">
                                 <div class="md:flex">
                                     <div class="md:flex-shrink-0">
-                                        <img class="h-60 w-full object-cover md:w-48" @if ($article->picture === 'no') src="https://source.unsplash.com/random/"
+                                        <img class="h-60 w-full object-cover md:w-48" @if ($article->picture === 'no') src="https://picsum.photos/200/300"
                                                 
                                         @else
                                                     src="{{ Storage::url($article->picture) }}" @endif alt="A cat">
